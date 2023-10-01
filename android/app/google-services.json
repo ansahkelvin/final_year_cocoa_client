@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1004387670266",
+    "project_id": "cocoa-project-daccd",
+    "storage_bucket": "cocoa-project-daccd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004387670266:android:c381e99001e1777bdf9143",
+        "android_client_info": {
+          "package_name": "com.example.cocoa_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004387670266-vt6vd0n5s51t0fdk57dtc1bdlv9j4n7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqlgm7wPS_5j8CUciZLcsT_aPL0jnY-IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004387670266-vt6vd0n5s51t0fdk57dtc1bdlv9j4n7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

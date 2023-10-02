@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocoa_project/pages/cocoa_processing.dart';
 import 'package:cocoa_project/widgets/Blog.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  XFile? image;
+
+  Future<void> getImage() async {
+    final ImagePicker imagePicker = ImagePicker();
+    final imagePicked = await imagePicker.pickImage(source: ImageSource.camera);
+    if (imagePicked != null) {
+      image = imagePicked;
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ProcessCocoa(
+          image: File(image!.path),
+        ),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: getImage,
         child: const Icon(Icons.camera_alt_outlined),
       ),
       drawer: const Drawer(),

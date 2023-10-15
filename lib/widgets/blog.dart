@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Blog extends StatefulWidget {
@@ -11,7 +12,7 @@ class Blog extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String description;
-  final String date;
+  final Timestamp date;
 
   @override
   State<Blog> createState() => _BlogState();
@@ -50,7 +51,7 @@ class _BlogState extends State<Blog> {
               height: 15,
             ),
             Text(
-              widget.date,
+              DateTime.parse(widget.date.toDate().toString()).toString(),
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,

@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   DocumentSnapshot ds = snapshot.data!.docs[index];
                   return Blog(
                     title: ds["title"],
-                    date: ds["date"].toString(),
+                    date: ds["date"],
                     description: ds["description"],
                     imageUrl: ds["imageUrl"],
                   );

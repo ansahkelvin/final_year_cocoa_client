@@ -106,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 15,
                             ),
                             TextFormField(
+                              obscureText: true,
                               controller: passwordController,
                               validator: (value) => value!.length < 6
                                   ? "Password must be more than 6 characters"

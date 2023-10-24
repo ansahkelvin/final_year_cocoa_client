@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
+import 'package:cocoa_project/widgets/progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +19,8 @@ class _ProcessCocoaState extends State<ProcessCocoa> {
     {"cocoa_pod": "red"},
     {"healthy": "green"}
   ];
+
+  bool isLoading = false;
 
   Future<void> runMLAlgorithmn() async {
     final request = http.MultipartRequest(
@@ -60,6 +62,10 @@ class _ProcessCocoaState extends State<ProcessCocoa> {
         iconTheme: const IconThemeData(color: Colors.black),
         actionsIconTheme: const IconThemeData(color: Colors.black),
         automaticallyImplyLeading: true,
+        title: const Text(
+          "Run Algorithm",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -73,54 +79,67 @@ class _ProcessCocoaState extends State<ProcessCocoa> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: double.infinity,
-                child: Image.file(widget.image),
+                child: Image.file(
+                  widget.image,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(
                 height: 30,
               ),
-              Card(
-                child: SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Cocoa Test",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        if (mlResponse != null)
-                          Text(
-                            mlResponse!["Class"].toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: mlResponse!["Class"] != "healthy"
-                                  ? Colors.red
-                                  : Colors.green,
-                            ),
+              isLoading
+                  ? const ProgressDialog(message: "Running ML")
+                  : Card(
+                      child: SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Cocoa Test",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              if (mlResponse != null)
+                                Text(
+                                  mlResponse!["Class"].toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: mlResponse!["Class"] != "healthy"
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                  "The infected young of both sexes and adult females can also spread the virus to adjacent healthy trees by crawling across interlocking branches.")
+                            ],
                           ),
-                        const SizedBox(
-                          height: 10,
                         ),
-                        const Text(
-                            "The infected young of both sexes and adult females can also spread the virus to adjacent healthy trees by crawling across interlocking branches.")
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 40)),
-                onPressed: runMLAlgorithmn,
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await runMLAlgorithmn();
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
                 child: const Text(
                   "Run Test",
                   style: TextStyle(
